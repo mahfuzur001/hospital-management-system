@@ -1,14 +1,24 @@
 from django.urls import path
-from .views import *
+from .views import (
+    PatientRegisterView,
+    LoginView,
+    CreateDoctorView,
+    CreateStaffView,
+    CreateAdminView,
+    UserProfileView,
+)
 
 urlpatterns = [
-    path('register/', PatientRegisterView.as_view()),
-    path('login/', LoginView.as_view()),
+    # --- Public Endpoints ---
+    path('register/', PatientRegisterView.as_view(), name='patient-register'),
+    path('login/', LoginView.as_view(), name='token_obtain_pair'),
 
-    path('admin/create-doctor/', CreateDoctorView.as_view()),
-    path('admin/create-staff/', CreateStaffView.as_view()),
-    path('admin/create-admin/', CreateAdminView.as_view()),
+    # --- Admin Only Endpoints (Management) ---
+    path('admin/create-doctor/', CreateDoctorView.as_view(), name='admin-create-doctor'),
+    path('admin/create-staff/', CreateStaffView.as_view(), name='admin-create-staff'),
+    path('admin/create-admin/', CreateAdminView.as_view(), name='admin-create-admin'),
 
-    path('profile/', ProfileView.as_view()),
-    path('profile/update/', ProfileUpdateView.as_view()),
+    # --- Authenticated User Endpoints ---
+    # এই একটি ইউআরএল দিয়েই GET (view) এবং PATCH/PUT (update) করা যাবে
+    path('profile/', UserProfileView.as_view(), name='user-profile'),
 ]
