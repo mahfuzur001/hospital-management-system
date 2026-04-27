@@ -26,4 +26,9 @@ urlpatterns = [
     path('api/reviews/', include('reviewsapp.urls')),
     path('api/staffs/', include('staffsapp.urls')),
     
+    path('api/rag/', include('Ragapp.urls')),  # RAG অ্যাপের URL
+    
 ]
+
+
+# আপনি যখন প্রথমবার কাজ শুরু করবেন, তখন প্রথমে POST রিকোয়েস্ট পাঠিয়ে /api/rag/rebuild-embeddings/ হিট করবেন। এতে করে ডাটাবেজের ডাক্তারদের ডাটা ভেক্টরে রূপান্তর হবে। এরপর আপনি চ্যাট করার জন্য প্রস্তুত!
