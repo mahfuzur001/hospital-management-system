@@ -1,24 +1,29 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .rag_services import RAGService
+from .rag_services import get_embedding_model, RAGService
+
+
 
 class ChatWithDoctorAIView(APIView):
-    """
-    ইউজারের প্রশ্নের ভিত্তিতে AI রেসপন্স দিবে।
-    """
+
     def post(self, request):
+        from .rag_services import RAGService  # 🔥 lazy import
+
         user_query = request.data.get('query')
-        
+
         if not user_query:
-            return Response({"error": "Query is required"}, status=status.HTTP_400_BAD_REQUEST)
-        
-        try:
-            # RAGService থেকে AI রেসপন্স নিয়ে আসা
-            ai_response = RAGService.ask_ai(user_query)
-            return Response({"response": ai_response}, status=status.HTTP_200_OK)
-        except Exception as e:
-            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(
+                {"error": "Query is required"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        ai_response = RAGService.ask_ai(user_query)
+
+        return Response(
+            {"response": ai_response},
+            status=status.HTTP_200_OK
+        )
 
 
 class RebuildEmbeddingsView(APIView):
