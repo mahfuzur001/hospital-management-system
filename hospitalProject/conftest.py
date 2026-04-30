@@ -49,3 +49,10 @@ def completed_appointment(db, patient, doctor):
         time="10:00:00",
         status="COMPLETED"
     )
+    
+    
+import pytest
+
+@pytest.fixture(autouse=True)
+def enable_db_access(db):
+    pass
